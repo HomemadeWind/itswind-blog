@@ -14,10 +14,11 @@ title = "Wind"
   dateFormat = "2 January 2006"
 
 [params.author]
-  name = "Your name here"
-  image = "img/blowfish_logo.png"
-  headline = "I'm only human"
-  bio = "A little bit about you"
+  name = "Wind"
+  image = "img/avatar.png"
+  headline = "Hey there, I’m Wind! 👋"
+  bio = "I’m a CTF player from Vietnam. I currently play for team BKISC, focusing primarily on cryptography.
+Feel free to check out my blog, where I post CTF writeups and mathematical notes!"
   # links = [
   #   { email = "mailto:hello@your_domain.com" },
   #   { link = "https://link-to-some-website.com/" },
