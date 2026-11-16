@@ -17,8 +17,10 @@ title = "Wind"
   name = "Wind"
   image = "img/avatar.png"
   headline = "Hey there, I’m Wind! 👋"
-  bio = "I’m a CTF player from Vietnam. I currently play for team BKISC, focusing primarily on cryptography.
-Feel free to check out my blog, where I post CTF writeups and mathematical notes!"
+  bio = "I’m a CTF player from Vietnam. I currently play for team BKISC, focusing primarily on cryptography. Feel free to check out my blog, where I post CTF writeups and mathematical notes!"
+  links = [
+    { github = "https://github.com/HomemadeWind" }
+  ]  
   # links = [
   #   { email = "mailto:hello@your_domain.com" },
   #   { link = "https://link-to-some-website.com/" },
