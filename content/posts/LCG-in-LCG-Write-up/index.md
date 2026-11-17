@@ -1,11 +1,13 @@
 ---
-title: LCG in LCG Write-up
-date: 2026-05-12 15:17:00 +0700
-categories: [CTF, Cryptography]
-tags: [lcg, python, writeup]
-math: true
-mermaid: true
+title: "LCG in LCG Write-up"
+date: 2026-05-12T15:17:00+07:00
+summary: "Write-up for the LCG in LCG cryptography challenge."
+categories: ["CTF", "Cryptography"]
+tags: ["lcg", "python", "writeup"]
+showTableOfContents: true
 ---
+
+{{< katex >}}
 
 <!-- # LCG in LCG Write-up -->
 

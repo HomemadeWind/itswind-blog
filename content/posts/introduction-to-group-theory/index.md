@@ -6,6 +6,8 @@ tags: ["math", "group-theory", "abstract-algebra"]
 categories: ["Notes","Cryptography","Seminar"]
 showTableOfContents: true
 ---
+{{< katex >}}
+
 <!-- ---
 title: "An Introduction to Group Theory"
 date: 2026-03-27 19:25:00 +0700
