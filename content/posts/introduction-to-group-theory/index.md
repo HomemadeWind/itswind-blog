@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Group Theory"
-date: 2026-03-27 19:25:00 +0700
+date: 2026-03-27T19:25:00+07:00
 summary: "Foundational concepts in group theory—axioms, subgroups, cyclic groups, and homomorphisms—for abstract algebra and cryptography."
 tags: ["math", "group-theory", "abstract-algebra"]
 categories: ["Notes","Cryptography","Seminar"]
