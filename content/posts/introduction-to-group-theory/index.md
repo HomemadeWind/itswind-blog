@@ -1,301 +1,323 @@
 ---
 title: "Introduction to Group Theory"
-date: 2026-07-03 14:50:00 +0700
+date: 2026-03-27 19:25:00 +0700
 summary: "Foundational concepts in group theory—axioms, subgroups, cyclic groups, and homomorphisms—for abstract algebra and cryptography."
 tags: ["math", "group-theory", "abstract-algebra"]
 categories: ["Notes","Cryptography","Seminar"]
 showTableOfContents: true
 ---
 <!-- ---
-title: "An Introduction to Group Theory Part 2"
-date: 2026-07-03 14:50:00 +0700
+title: "An Introduction to Group Theory"
+date: 2026-03-27 19:25:00 +0700
 categories: [Cryptography, Seminar]
 tags: [group-theory, abstract-algebra, seminar]
 math: true
 --- -->
 
-This is Part 2 of my Group Theory seminar summary. Now that we have covered the foundational definitions, we will dive into how different groups interact with each other and how they can be partitioned. As a reminder, you can check out the [original slides](/assets/pdf/Part_2_Group_Theory.pdf) for the full context.
+Recently, I presented a seminar about Group Theory. I'd recommend you read the full [original slides](/assets/pdf/Part_1_Group_Theory.pdf) for more context but since it's long so I'll just summarize the contents here.
 
-## 1. Homomorphisms
+## 1. What is a Group?
 
-After learning what groups are, a natural question is:
+### Definition of a Group
+A **Group** is some set $G$, along with a binary operation $\circ$ that conforms to some Axioms. 
 
-> Can two different groups behave in essentially the same way?
+**Notation:** We write a Group as $(G, \circ)$ to explicitly specify both the set $G$ and the operation, or simply $G$ with any operation.
 
-To answer this, we introduce **homomorphisms**.
+**So what kind of set G could be here? and what exactly is a binary operation?**
 
-### Definition
+### The Set $G$
+The set $G$ can be any set as long as it is **non-empty**. Examples include:
+* Hours on a clock form the set $H=\lbrace0,1,2,\ldots,11\rbrace$
+* The integers: $\mathbb{Z}=\lbrace\ldots,-2,-1,0,1,2,\ldots\rbrace$
+* The rational, natural, real, and complex numbers: $\mathbb{Q},\mathbb{N},\mathbb{R},\mathbb{C}$
+* The even integers: $2\mathbb{Z}=\lbrace\ldots,-2,0,2,\ldots\rbrace$
 
-A **homomorphism** is a map
+### The Binary Operation
+The binary operation can be any function as long as it takes 2 inputs and produces 1 output, e.g., $f(a,b)=c$ (from which the name "binary"). Examples include:
+* **Arithmetic:** Addition ($+$), Multiplication ($\times$),...
+* **Boolean Algebra:** XOR ($\oplus$), AND ($\land$), OR ($\lor$)
+* **Others:** $a\circ b=a^{b}$, or $a\circ b=a\times b+2a-3$
 
-$$
-f:G\rightarrow H
-$$
-
-between two groups that preserves the group operation.
-
-In other words,
-
-$$
-f(a\circ b)=f(a)\star f(b)
-$$
-
-for every $a,b\in G$, where $\circ$ and $\star$ are the operations on $G$ and $H$, respectively.
-
-Notice that the operations do not have to be the same.
+The *reason* behind we use $\circ$ to denote the operation is that **we** don't actually *know* what operation yet.
+So what about **Axioms**?
 
 ---
+
+### The 4 Axioms
+To be a valid group, this system must satisfy the following 4 Axioms:
+
+1. **Closure:** For all $a, b \in G$, the result $a \circ b$ is also in $G$.
+2. **Associativity:** For all $a, b, c \in G$:
+   $$(a \circ b) \circ c = a \circ (b \circ c)$$
+3. **Identity Element:** There exists an element $e \in G$ such that:
+   $$a \circ e = a = e \circ a$$
+4. **Inverse Element:** For every $a \in G$, there exists an element $a^{-1} \in G$ such that:
+   $$a \circ a^{-1} = e = a^{-1} \circ a$$
+
+---
+
+### Examples of Groups (and Non-Groups)
+
+**Example 1: Integers under Addition $(\mathbb{Z}, +)$**
+Let's test if Integers $\mathbb{Z}=\lbrace\ldots,-1,0,1,\ldots\rbrace$ under Addition ($+$) follow the rules.
+
+* **1. Closure:** Does the sum of 2 integers still stay inside the set? 
+  * *Check:* $5+(-3)=2$. Is 2 an integer? Yes. You can't add two whole numbers and suddenly get a fraction (like 2.5).
+* **2. Associativity:** Does the order of addition matter? 
+  * *Check:* $(2+3)+4=5+4=9$ and $2+(3+4)=2+7=9$. The sums are identical.
+* **3. Identity Element:** Is there an Identity element? We need an $e$ such that $a+e=a$. 
+  * *Check 0:* $5+0=5$ and $(-7)+0=-7$. Yes, $e=0$ is the identity.
+* **4. Inverse Element:** Can we "undo" an addition? For any integer $a$, can we get back to the identity (0)? 
+  * If we have 5, we need -5 to reach 0. If we have -100, we need 100 to reach 0. Yes, for every $a$, the inverse is $-a$.
+
+**Conclusion:** $(\mathbb{Z},+)$ is indeed a group.
+
+**Example 2: Natural Numbers under Addition $(\mathbb{N}, +)$**
+We proved $(\mathbb{Z},+)$ is a group. What about $(\mathbb{N}=\lbrace0,1,2,\ldots\rbrace,+)$? Let's check it out:
+
+* **Closure, Associativity, Identity:** Similar to $(\mathbb{Z}, +)$.
+* **Inverse:** Are there inverses for every $a \in \mathbb{N}$? Unfortunately no, there's no number in $\mathbb{N}$ that satisfies: $1+x=0$.
+
+**Conclusion:** $(\mathbb{N}, +)$ is **not** a group.
+
+**Example 3: Finite Sets - Integers Modulo** $n$ $(\mathbb{Z}_{n}, +)$
+
+What about finite sets? Consider the set Integer modulo $n$ ($\mathbb{Z}_{n}$) under the addition operator. Let's test if it is a group:
+
+* **Closure, Associativity, Identity:** Similar to ($$\mathbb{Z}, +$$).
+* **Inverse:** For any $$a \in \mathbb{Z}_{n}$$, we want $$b \in \mathbb{Z}_{n}$$ such that $$a+b \equiv 0 \pmod{n}$$. Choose $$b=n-a$$. Then: $$a + (n - a) = n \equiv 0 \pmod{n}$$. So every element has an inverse.
+
+**Conclusion:** ($$\mathbb{Z}_{n}, +$$) is a group.
+
+---
+
+### Properties of a Group
+Groups share several core properties. We'll prove the first two and leave the rest as exercises.
+
+* **Uniqueness:** The Identity element ($e$) and Inverses ($a^{-1}$) are unique.
+* **Cancellation Law:** For all $a, b, c \in G$: If $a \circ b = a \circ c$, then $b = c$.
+* **Solvability:** The equation $a \circ x = b$ always has a unique solution $x \in G$.
+
+**Proof: The identity element is unique**
+
+Suppose $e$ and $e'$ are both identity elements in $G$.
+* $e \circ e' = e'$ (treating $e$ as the identity)
+* $e \circ e' = e$ (treating $e'$ as the identity)
+Combine the two results: $e' = e \circ e' = e$. Therefore, $e = e'$, so the identity is unique.
+
+**Proof: The inverses are unique**
+
+Suppose $g'$ and $g''$ are both inverses of element $g$ in $G$. We need to show that $g' = g''$.
+We have:
+* $g \circ g' = e = g' \circ g$
+* $g \circ g'' = e = g'' \circ g$
+
+$$\rightarrow g' = g' \circ e = g' \circ (g \circ g'') = (g' \circ g) \circ g'' = e \circ g'' = g''$$
+
+Therefore, $g' = g''$, so every inverse for all $g \in G$ is unique.
+
+---
+
+### Exercises
+
+I think after all these definitions and examples, you can try proving these yourself! (Really easy, trust)
+
+* **Exercise 1:** Show that for all $a, b, c \in G$: If $a \circ b = a \circ c$, then $b = c$.
+* **Exercise 2:** Show that the equation $a \circ x = b$ always has a unique solution $x \in G$.
+
+---
+
+## 2. Abelian Groups
+
+### Definition
+A group $(G, \circ)$ is called **Abelian** (or commutative) if it satisfies one extra axiom:
+
+5. **Commutativity:** For all $a, b \in G$:
+   $$a \circ b = b \circ a$$
 
 ### Examples
+**Examples:**
+* **Abelian:** Integers $(\mathbb{Z}, +)$ because $1+2=2+1$. The same applies to $(\mathbb{R}, +)$, $(\mathbb{Q}, +)$, and $(\mathbb{C}, +)$. The Multiplicative Group modulo $p$, denoted as $(\mathbb{Z}_{p},\times)$, is also Abelian because multiplication is commutative.
+* **Non-Abelian:** Matrix Multiplication, because usually $A \times B \neq B \times A$.
 
-Consider
+* Ye that's it, we don't have much things to talk about abelian's own *properties* but it's **commutativity** appears **alot** for later *groups* and *theorems*.
 
-$$
-f:(\mathbb Z,+)\rightarrow(\mathbb Z_6,+)
-$$
-
-defined by
-
-$$
-f(x)=x\bmod6.
-$$
-
-Then
-
-$$
-f(a+b)
-=(a+b)\bmod6
-=f(a)+f(b),
-$$
-
-so $f$ is a homomorphism.
-
-On the other hand,
-
-$$
-f(x)=x+1
-$$
-
-is **not** a homomorphism because
-
-$$
-f(a+b)=a+b+1
-$$
-
-while
-
-$$
-f(a)+f(b)=a+b+2.
-$$
 
 ---
 
-### Properties
+## 3. Subgroups
 
-Homomorphisms preserve many important structures.
+A **Subgroup** is a subset $H \subseteq G$ that forms a group in its own right under the same binary operation as $G$. In simpler terms, it's a group within a group. We write $H \le G$ to denote that $H$ is a subgroup of $G$.
 
-If $f:G\to H$ is a homomorphism, then
+### The Subgroup Test
+Instead of checking all 4 group axioms again, we only need to verify two conditions for a non-empty subset $H$:
+1. **Closure:** $\forall a,b \in H \Rightarrow a \circ b \in H$
+2. **Inverses:** $\forall a \in H \Rightarrow a^{-1} \in H$
 
-- $f(e_G)=e_H$.
-- $f(a^{-1})=f(a)^{-1}$.
-- $f(a^n)=f(a)^n$ for every integer $n$.
+*(Note: Properties like Associativity and Commutativity are automatically inherited from the parent group $G$.)*
 
-These properties make homomorphisms extremely useful throughout algebra and cryptography.
+### Examples of Subgroups
+* **Even Integers:** Consider the set $2\mathbb{Z} = \lbrace\ldots,-4,-2,0,2,4,\ldots\rbrace$. This set forms a group under addition, denoted as $(2\mathbb{Z}, +)$. Since every even integer is also an integer ($2\mathbb{Z} \subseteq \mathbb{Z}$), we say that $(2\mathbb{Z}, +)$ is a subgroup of $(\mathbb{Z}, +)$.
+* **Integers Modulo 6:** Let $G = \mathbb{Z}_{6} = \lbrace0,1,2,3,4,5\rbrace$ under addition. The subsets $H=\lbrace0,3\rbrace$ and $K=\lbrace0\rbrace$ are both subgroups of $G$. 
+  * Notice that the subset $K=\lbrace e_G\rbrace$ is always a subgroup of $G$. We call this a **trivial subgroup**, while a proper subset $H$ is called a **proper subgroup**.
 
-## 2. Isomorphisms
+### Properties of Subgroups
+**Proposition 1:** The identity of $G$ ($e_G$) is in $H$ ($e_H$).
 
-Sometimes a homomorphism preserves **everything** about the group.
+**Proof:**
+It is quite easy to verify that the identity of $G$ is in $H$.
+Assume that $a \in H$ where $a \neq e_G$. Since $H$ is a group, $a$ must be in $H$ and so is $a^{-1}$. Their operation results in the identity of $H$:
+$$a \circ a^{-1} = e_H$$
+Looking from the group $G$ perspective, $a \circ a^{-1}$ is also equal to $e_G$.
+Therefore:
+$$e_H = e_G \in H$$
+
+*(Note: A subset $H \subseteq G$ could be a group without being a subgroup of $G$).*
+
+---
+
+## 4. Cyclic Groups
+
+Knowing every element of a group can be difficult, especially when the group is large.
+
+A natural question is:
+
+> Can we generate every element of a group starting from just a single element?
+
+Surprisingly, the answer is **yes** for many groups.
+
+### Cyclic Subgroups
+
+Let $G$ be an Abelian group and let $a \in G$.
+
+The **cyclic subgroup generated by** $a$ is denoted by $\langle a \rangle$.
+
+In multiplicative notation,
+
+$$
+\langle a\rangle=\{a^k:k\in\mathbb Z\}
+=\lbrace\ldots,a^{-1},e,a,a^2,\ldots\rbrace.
+$$
+
+In additive notation,
+
+$$
+\langle a\rangle=\{ka:k\in\mathbb Z\}
+=\lbrace\ldots,-a,0,a,2a,\ldots\rbrace.
+$$
+
+For example, in $(\mathbb Z,+)$,
+
+$$
+\langle1\rangle=\mathbb Z,\qquad
+\langle3\rangle=3\mathbb Z,\qquad
+\langle7\rangle=7\mathbb Z.
+$$
+
+Notice that different elements may generate different subgroups.
+
+---
 
 ### Definition
 
-An **isomorphism** is a bijective homomorphism.
-
-If there exists an isomorphism
+A group $G$ is called **cyclic** if there exists an element $a\in G$ such that
 
 $$
-f:G\rightarrow H,
+G=\langle a\rangle.
 $$
 
-we write
+Such an element is called a **generator** of $G$.
 
-$$
-G\cong H.
-$$
+For example,
 
-Although the elements may look different, the two groups have exactly the same algebraic structure.
+- $(\mathbb Z,+)$ is cyclic because $\langle1\rangle=\mathbb Z$.
+- $(\mathbb Z_n,+)$ is cyclic because $\langle1\rangle=\mathbb Z_n$.
+
+Not every element has to be a generator.
+
+For instance, in $(\mathbb Z_6,+)$,
+
+- $\langle1\rangle=\mathbb Z_6$
+- $\langle5\rangle=\mathbb Z_6$
+- $\langle2\rangle=\lbrace0,2,4\rbrace$
+- $\langle3\rangle=\lbrace0,3\rbrace$
+
+Only $1$ and $5$ generate the entire group.
 
 ---
 
-### Example
+### Order of an Element
 
-Consider
-
-$$
-(\mathbb Z_4,+)
-$$
-
-and
+The **order** of an element $a$, denoted $\operatorname{ord}(a)$, is the smallest positive integer $k$ satisfying
 
 $$
-(\lbrace1,i,-1,-i\rbrace,\times).
+a^k=e.
 $$
 
-Define
+If no such integer exists, we write
 
 $$
-\begin{aligned}
-0&\mapsto1,\\
-1&\mapsto i,\\
-2&\mapsto-1,\\
-3&\mapsto-i.
-\end{aligned}
+\operatorname{ord}(a)=\infty.
 $$
 
-Addition modulo $4$ corresponds exactly to multiplication of the fourth roots of unity.
+For example,
 
-Therefore,
+- In $(\mathbb Z,+)$, the element $1$ has infinite order.
+- In $(\mathbb Z_6,+)$,
+  - $\operatorname{ord}(1)=6$
+  - $\operatorname{ord}(2)=3$
+  - $\operatorname{ord}(3)=2$
 
-$$
-\mathbb Z_4\cong
-\lbrace1,i,-1,-i\rbrace.
-$$
-
-Even though these groups look completely different, they are algebraically identical.
-
-## 3. Cosets
-
-Suppose $H$ is a subgroup of $G$.
-
-Instead of looking only at $H$, we can "shift" it by an element of $G$.
-
-### Definition
-
-For $g\in G$,
-
-the **left coset** of $H$ is
-
-$$
-gH=\lbrace gh:h\in H\rbrace,
-$$
-
-while the **right coset** is
-
-$$
-Hg=\lbrace hg:h\in H\rbrace.
-$$
-
-If the group is Abelian, these are always equal.
+Notice that the order of an element is exactly the number of distinct elements in the cyclic subgroup it generates.
 
 ---
 
-### Example
+### Properties of Cyclic Groups
 
-Let
+Two important properties of cyclic groups are:
+
+- Every cyclic group is **Abelian**.
+- Every subgroup of a cyclic group is itself **cyclic**.
+
+**Proof: Every cyclic group is Abelian**
+
+Suppose $a,b \in G$ and $G = \langle g\rangle$.
+
+Then there exist integers $m,n$ such that $a=g^m$ and $b=g^n$. Therefore,
+
+* $ab=g^mg^n=g^{m+n}=g^{n+m}=g^ng^m=ba$.
+
+Therefore, $ab=ba$ for all $a,b\in G$. Hence, $G$ is Abelian.
+
+**Proof idea: Every subgroup of a cyclic group is itself cyclic**
+
+The complete proof is slightly beyond the scope of this post, so I'll only present the main idea.
+
+Let $H \le G$. If $H=\lbrace e\rbrace$, then it is cyclic. Otherwise, choose the smallest positive integer $k$ such that $a^k \in H$.
+
+One can then show that every element of $H$ is a power of $a^k$. Hence,
 
 $$
-G=\mathbb Z,
-\qquad
-H=2\mathbb Z.
+H=\langle a^k\rangle.
 $$
 
-Then
+These properties are fundamental in abstract algebra and appear frequently throughout modern cryptography.
 
-$$
-0+H
-=
-\lbrace\ldots,-4,-2,0,2,4,\ldots\rbrace,
-$$
+If you're interested in a complete proof, see:
 
-while
+> Thomas W. Judson, *Abstract Algebra: Theory and Applications*, Theorem 4.10 (p. 48).
 
-$$
-1+H
-=
-\lbrace\ldots,-3,-1,1,3,5,\ldots\rbrace.
-$$
+## References
 
-Notice that every integer belongs to exactly one coset.
+My understanding of group theory and related topics comes primarily from the following excellent textbooks:
 
-Cosets partition a group into disjoint pieces.
+- Thomas W. Judson, *Abstract Algebra: Theory and Applications*  
+- Victor Shoup, *A Computational Introduction to Number Theory and Algebra*, Chapter 6: Abelian Groups (pp. 130–165)
 
 ---
 
-### Lagrange's Theorem
+### See Also
 
-One of the most important consequences of cosets is **Lagrange's Theorem**.
+With the basic structure of groups and how they generate elements now established, we can move on to studying how different groups relate to one another.
 
-If $H\le G$ and $G$ is finite,
-
-$$
-|H|\mid|G|.
-$$
-
-In other words, the order of every subgroup divides the order of the group.
-
-This theorem appears everywhere in group theory and plays an important role in modern cryptography.
-
-## 4. Quotient Groups
-
-Cosets naturally lead to the idea of a **quotient group**.
-
-Instead of treating each element separately, we treat each coset as a single object.
-
-However, this only works when the subgroup is **normal**.
-
-### Definition
-
-If $N\trianglelefteq G$ is a normal subgroup, then the quotient group is
-
-$$
-G/N
-=
-\lbrace gN:g\in G\rbrace.
-$$
-
-The group operation is
-
-$$
-(gN)(hN)
-=
-(gh)N.
-$$
-
----
-
-### Example
-
-Let
-
-$$
-G=\mathbb Z,
-\qquad
-N=3\mathbb Z.
-$$
-
-Then
-
-$$
-\mathbb Z/3\mathbb Z
-=
-\lbrace
-0+N,\,
-1+N,\,
-2+N
-\rbrace,
-$$
-
-which behaves exactly like
-
-$$
-\mathbb Z_3.
-$$
-
-In fact,
-
-$$
-\mathbb Z/3\mathbb Z
-\cong
-\mathbb Z_3.
-$$
-
-Quotient groups allow us to simplify complicated groups while preserving their essential structure.
+Continue to **[An Introduction to Group Theory Part 2](/posts/Introduction-To-Group-Theory-Part-2/)**, where we explore homomorphisms, isomorphisms, cosets, and quotient groups.
