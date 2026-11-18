@@ -185,9 +185,7 @@ $$
 Subtracting the two equations eliminates $b$:
 
 $$
-s_{i+7}-s_i
-=
-a(s_{i+6}-s_{i-1}),
+s_{i+7}-s_i = a(s_{i+6}-s_{i-1}),
 $$
 
 which immediately gives
