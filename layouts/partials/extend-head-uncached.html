@@ -1,0 +1,5 @@
+{{ if .IsHome }}
+  {{ $alg := .Site.Params.fingerprintAlgorithm | default "sha512" }}
+  {{ $particles := resources.Get "js/homepage-particles.js" | resources.Minify | resources.Fingerprint $alg }}
+  <script defer src="{{ $particles.RelPermalink }}" integrity="{{ $particles.Data.Integrity }}"></script>
+{{ end }}
